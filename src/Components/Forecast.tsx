@@ -24,7 +24,8 @@ function Forecast() {
 
   return (
     <ForecastContainer>
-      {Object.keys(periods).map((period: any) => (
+      {periods.length === 0 ? <div>Loading...</div> : 
+      Object.keys(periods).map((period: any) => (
         <ForecastCards key={period} period={periods[period]} />
       ))}
     </ForecastContainer>
