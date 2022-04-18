@@ -16,12 +16,17 @@ interface Props {
 }
 
 
-function Forecast({ periods }) {
+function Forecast() {
   return (
     <ForecastContainer>
-      {periods.map((period: any) => (
-        <ForecastCards key={period.number} period={period} />
-      ))}
+       <ForecastCards  />
+       <ForecastCards  />
+       <ForecastCards  />
+       <ForecastCards  />
+       <ForecastCards  />
+       <ForecastCards  />
+       <ForecastCards  />
+       <ForecastCards  />
     </ForecastContainer>
   )
 }

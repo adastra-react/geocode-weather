@@ -25,12 +25,12 @@ interface Props {
     periods: any
 }
 
-function GridSection({setXcoordinates, periods, setYcoordinates, GetForcastURL}) {
+function GridSection() {
   return (
     <GridContainer>
         <LeftContainer>
-            <Header setXcoordinates={setXcoordinates} GetForcastURL={GetForcastURL} setYcoordinates={setYcoordinates} />
-            <Forecast periods={periods} />
+            <Header  />
+            <Forecast  />
         </LeftContainer>
         {/* <RightContainer>
 

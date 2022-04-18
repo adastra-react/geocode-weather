@@ -51,18 +51,18 @@ interface Props {
     periods: any
   }
 
-function ForecastCards({ period }) {
+function ForecastCards() {
   return (
     <ForecastCardContainer>
         <ImageSection>
-            <ImageContainer background={period.icon} >
+            <ImageContainer background={ThunderStormImg} >
                 {/* <img src={ThunderStormImg}/> */}
             </ImageContainer>
         </ImageSection>
         <ForecastCardTextContainer>
-            <ForecastText>{period.shortForecast}</ForecastText>
-            <ForecastText>{period.temperature}°</ForecastText>
-            <ForecastText>{period.name}°</ForecastText>
+            <ForecastText>forecast</ForecastText>
+            <ForecastText>17°</ForecastText>
+            <ForecastText>monday</ForecastText>
         </ForecastCardTextContainer>
     </ForecastCardContainer>
   )
