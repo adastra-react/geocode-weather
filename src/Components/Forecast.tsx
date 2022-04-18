@@ -1,6 +1,9 @@
 import React from 'react'
 import Styled from 'styled-components'
 import ForecastCards from './ForecastCards'
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store'
+import { setPeriods } from '../redux/weatherSlice'
 
 const ForecastContainer = Styled.div`
     // width: 100%;
@@ -17,16 +20,13 @@ interface Props {
 
 
 function Forecast() {
+  const periods = useSelector((state: RootState) => state.weather.periods)
+
   return (
     <ForecastContainer>
-       <ForecastCards  />
-       <ForecastCards  />
-       <ForecastCards  />
-       <ForecastCards  />
-       <ForecastCards  />
-       <ForecastCards  />
-       <ForecastCards  />
-       <ForecastCards  />
+      {Object.keys(periods).map((period: any) => (
+        <ForecastCards key={period} period={periods[period]} />
+      ))}
     </ForecastContainer>
   )
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import Styled from 'styled-components'
-import ThunderStormImg from '../Assets/Images/thunder-storm.jpg'
+// import ThunderStormImg from '../Assets/Images/thunder-storm.jpg'
 
 const ForecastCardContainer = Styled.div`   
     width: 200px;
@@ -48,21 +48,21 @@ const ForecastText = Styled.p`
     fontfamily: 'Roboto', sans-serif;
 `
 interface Props {
-    periods: any
+    period: any
   }
 
-function ForecastCards() {
+function ForecastCards({ period }: Props) {
   return (
     <ForecastCardContainer>
         <ImageSection>
-            <ImageContainer background={ThunderStormImg} >
-                {/* <img src={ThunderStormImg}/> */}
+            <ImageContainer background={period.icon} >
+                
             </ImageContainer>
         </ImageSection>
         <ForecastCardTextContainer>
-            <ForecastText>forecast</ForecastText>
-            <ForecastText>17°</ForecastText>
-            <ForecastText>monday</ForecastText>
+            <ForecastText>{period.shortForecast}</ForecastText>
+            <ForecastText>{period.temperature}°</ForecastText>
+            <ForecastText>{period.name}</ForecastText>
         </ForecastCardTextContainer>
     </ForecastCardContainer>
   )

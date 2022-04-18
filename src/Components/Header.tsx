@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { RootState } from '../redux/store'
 import { useDispatch, useSelector } from 'react-redux';
-import { set_X_coordinates, set_Y_coordinates, setPeriods } from '../redux/slice'
+import { setPeriods } from '../redux/weatherSlice'
 
 const HeaderContainer = styled.div`
     height: 130px;
@@ -63,6 +63,7 @@ function Header() {
     const dispatch = useDispatch();
     const [address, setAddress] = useState('');
     let OneLineAddress = `https://geocoding.geo.census.gov/geocoder/locations/onelineaddress`
+    const periods = useSelector((state: RootState) => state.weather.periods)
     
     const getCoordinates = () => {
         axios.get(OneLineAddress, {
@@ -89,13 +90,20 @@ function Header() {
             dispatch(setPeriods(weatherURL))
             console.log(weatherURL)
             getWeeklyForcast(weatherURL)
+            
         })
     }
 
     const getWeeklyForcast = (forecastURL) => {
         axios.get(forecastURL).then(res => {
-            let weeklyForcast = res.data.properties.periods
-            console.log(weeklyForcast)
+            let weeklyForcast : []
+            weeklyForcast = res.data.properties.periods
+            // dispatch(setPeriods(res.data.properties.periods))
+            // setTimeout(() => {
+            //     dispatch(setPeriods([]))
+            // }, 1000)
+            dispatch(setPeriods(weeklyForcast))
+            console.log(periods)
         })
     }
 
@@ -107,21 +115,13 @@ function Header() {
             <Subtext>Monday, August 10th</Subtext>
         </HeaderTextContainer>
         <InputContainer>
-        {/* <form
-         onSubmit={getAddress}
-          > */}
             <input placeholder='Address' required onChange={(e) => setAddress(e.target.value)} value={address} />
-            {/* <input placeholder='city'  onChange={(e) => setCity(e.target.value)} value={city} />
-            <input placeholder='state' required  onChange={(e) => setSetCityState(e.target.value)} value={cityState} />
-            <input placeholder='zip' required  onChange={(e) => setZip(e.target.value)} value={zip} /> */}
                 <button
                     type='submit'
                     onClick={getCoordinates}
                      >
                     submit
                 </button>
-                
-        {/* </form> */}
         </InputContainer>
     </HeaderContainer>
   )

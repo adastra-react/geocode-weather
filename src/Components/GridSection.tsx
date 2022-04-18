@@ -32,9 +32,6 @@ function GridSection() {
             <Header  />
             <Forecast  />
         </LeftContainer>
-        {/* <RightContainer>
-
-        </RightContainer> */}
     </GridContainer>
   )
 }
