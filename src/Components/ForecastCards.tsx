@@ -53,7 +53,7 @@ interface Props {
 
 function ForecastCards({ period }: Props) {
   return (
-    <ForecastCardContainer>
+    <ForecastCardContainer >
         <ImageSection>
             <ImageContainer background={period.icon} >
 

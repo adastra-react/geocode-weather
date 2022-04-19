@@ -150,7 +150,6 @@ function Header() {
     useEffect(() => {
         handelTime();
         setInterval(handelTime, 1000);
-        console.log(ctime)
     }, [])
 
 

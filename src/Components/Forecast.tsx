@@ -48,7 +48,7 @@ function Forecast() {
   const periods = useSelector((state: RootState) => state.weather.periods)
 
   return (
-    <ForecastContainer>
+    <ForecastContainer >
       {periods.length === 0 ?
          <LoadingContainer>
             <Lottie loop={true} animationData={LoadingAnimation} />
