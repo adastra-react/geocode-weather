@@ -5,6 +5,7 @@ import { RootState } from '../redux/store'
 import { useDispatch, useSelector } from 'react-redux';
 import { setPeriods } from '../redux/weatherSlice'
 import { ToastContainer, toast } from 'react-toastify';
+import MagnifierImg from '../Assets/images/magnifier.png'
 import 'react-toastify/dist/ReactToastify.css';
 
 const HeaderContainer = styled.div`
@@ -36,10 +37,21 @@ const Subtext = styled.p`
 
 const SubmitButton = styled.button`
     border: none;
+    display: flex;
+    flex-direction: row;
+    font-size: 17px;
+
+    align-items: center;
     color: ${(props:any) => props.color};
     background-color: ${(props:any) => props.backgroundColor};
     border-radius: 5px;
     padding: 10px;
+`
+
+const SearchImag = styled.img`
+    height: 20px;
+    width: 20px;
+    margin-left: 10px;
 `
 
 const InputContainer = styled.div`
@@ -163,7 +175,7 @@ function Header() {
             <input placeholder='Address' required onChange={(e) => setAddress(e.target.value)} value={address} />
             {loading ? 
                 <SubmitButton color='#608efd' backgroundColor='#f1f5ff'>Searching...</SubmitButton> : 
-                <SubmitButton color='#f1f5ff' backgroundColor='#608efd' onClick={getCoordinates}>Submit</SubmitButton>}
+                <SubmitButton color='#f1f5ff' backgroundColor='#608efd' onClick={getCoordinates}>Search<SearchImag src={MagnifierImg} /></SubmitButton>}
         </InputContainer>
     </HeaderContainer>
   )
