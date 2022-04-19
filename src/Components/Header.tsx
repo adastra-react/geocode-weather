@@ -4,6 +4,8 @@ import axios from 'axios';
 import { RootState } from '../redux/store'
 import { useDispatch, useSelector } from 'react-redux';
 import { setPeriods } from '../redux/weatherSlice'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const HeaderContainer = styled.div`
     height: 130px;
@@ -70,29 +72,48 @@ interface Props {
 function Header() {
 
     const dispatch = useDispatch();
+    const time = null;
+    const [ctime, setDate] = useState(time); 
     const [address, setAddress] = useState('');
     const [loading, setLoading] = useState(false);
     let OneLineAddress = `https://geocoding.geo.census.gov/geocoder/locations/onelineaddress`
     const periods = useSelector((state: RootState) => state.weather.periods)
+    const current = new Date();
+    const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+
+    const AddValidAddressToast = () => toast("Please enter a valid address!");
+    const AddAddressToast = () => toast("Please enter an address!");
+
+    const handelTime = () =>{
+        let time = new Date().toLocaleTimeString();
+        setDate(time);
+      }
     
     const getCoordinates = () => {
         setLoading(true);
-        axios.get(OneLineAddress, {
-            params: {
-                address: address,
-                benchmark: 'Public_AR_Current',
-                format: 'json'
-            }
-        })
-            .then(res => {
-                let coordinates = res.data.result.addressMatches[0].coordinates
-                console.log(coordinates)
-                getForcastURL(coordinates.x, coordinates.y)
+        if(address === ''){
+            AddAddressToast();
+            setLoading(false);
+        }else{
+            axios.get(OneLineAddress, {
+                params: {
+                    address: address,
+                    benchmark: 'Public_AR_Current',
+                    format: 'json'
+                }
             })
-            .catch(err => {
-                console.log(err.message)
-            })
-            
+                .then(res => {
+                    let coordinates = res.data.result.addressMatches[0].coordinates
+                    console.log(coordinates)
+                    getForcastURL(coordinates.x, coordinates.y)
+                })
+                .catch(err => {
+                    console.log(err.message)
+                    setAddress('')
+                    AddValidAddressToast()
+                    setLoading(false);
+                })
+        }       
     }
 
     const getForcastURL = (xcoordinates, ycoordinates) => {
@@ -114,13 +135,30 @@ function Header() {
         })
     }
 
+    useEffect(() => {
+        handelTime();
+        setInterval(handelTime, 1000);
+        console.log(ctime)
+    }, [])
+
 
   return (
     <HeaderContainer>
         <HeaderTextContainer>
-            <MainText>07:32AM</MainText>
-            <Subtext>Monday, August 10th</Subtext>
+            <MainText>{ctime}</MainText>
+            <Subtext>{date}</Subtext>
         </HeaderTextContainer>
+        <ToastContainer
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            />
         <InputContainer>
             <input placeholder='Address' required onChange={(e) => setAddress(e.target.value)} value={address} />
             {loading ? 
