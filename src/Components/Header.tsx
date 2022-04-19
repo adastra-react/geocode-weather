@@ -32,19 +32,28 @@ const Subtext = styled.p`
     color: #9699ac;
 `
 
+const SubmitButton = styled.button`
+    border: none;
+    color: ${(props:any) => props.color};
+    background-color: ${(props:any) => props.backgroundColor};
+    border-radius: 5px;
+    padding: 10px;
+`
+
 const InputContainer = styled.div`
     display: flex;
     flex-direction: row
     height: 100%;
     justify-content: space-between
-    width: 90%;
+    width: 400px;
 
     input {
         height: 40px;
-        width: 200px;
+        width: 350px;
         border: none;
         border-radius: 5px;
-        // padding-left: 10px;
+        padding-left: 10px;
+        margin-right: 20px;
     }
 
     input:focus {
@@ -62,10 +71,12 @@ function Header() {
 
     const dispatch = useDispatch();
     const [address, setAddress] = useState('');
+    const [loading, setLoading] = useState(false);
     let OneLineAddress = `https://geocoding.geo.census.gov/geocoder/locations/onelineaddress`
     const periods = useSelector((state: RootState) => state.weather.periods)
     
     const getCoordinates = () => {
+        setLoading(true);
         axios.get(OneLineAddress, {
             params: {
                 address: address,
@@ -90,7 +101,6 @@ function Header() {
             dispatch(setPeriods(weatherURL))
             console.log(weatherURL)
             getWeeklyForcast(weatherURL)
-            
         })
     }
 
@@ -98,12 +108,9 @@ function Header() {
         axios.get(forecastURL).then(res => {
             let weeklyForcast : []
             weeklyForcast = res.data.properties.periods
-            // dispatch(setPeriods(res.data.properties.periods))
-            // setTimeout(() => {
-            //     dispatch(setPeriods([]))
-            // }, 1000)
             dispatch(setPeriods(weeklyForcast))
             console.log(periods)
+            setLoading(false);
         })
     }
 
@@ -116,12 +123,9 @@ function Header() {
         </HeaderTextContainer>
         <InputContainer>
             <input placeholder='Address' required onChange={(e) => setAddress(e.target.value)} value={address} />
-                <button
-                    type='submit'
-                    onClick={getCoordinates}
-                     >
-                    submit
-                </button>
+            {loading ? 
+                <SubmitButton color='#608efd' backgroundColor='#f1f5ff'>Searching...</SubmitButton> : 
+                <SubmitButton color='#f1f5ff' backgroundColor='#608efd' onClick={getCoordinates}>Submit</SubmitButton>}
         </InputContainer>
     </HeaderContainer>
   )

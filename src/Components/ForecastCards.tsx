@@ -3,7 +3,7 @@ import Styled from 'styled-components'
 // import ThunderStormImg from '../Assets/Images/thunder-storm.jpg'
 
 const ForecastCardContainer = Styled.div`   
-    width: 200px;
+    width: 600px;
     height: 400px;
     background-color: white;
     border-radius: 12px;
@@ -56,7 +56,7 @@ function ForecastCards({ period }: Props) {
     <ForecastCardContainer>
         <ImageSection>
             <ImageContainer background={period.icon} >
-                
+
             </ImageContainer>
         </ImageSection>
         <ForecastCardTextContainer>
